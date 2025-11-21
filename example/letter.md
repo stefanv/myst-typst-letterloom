@@ -9,7 +9,8 @@ options:
   salutation: "Dear Dr. Smith,"
   closing: "Best regards,"
 #  signature-name: Johnny
-  signature-affiliation: "Conference Chair, Summit Science Symposium"
+  signature-title: Conference Chair
+  signature-affiliation: "Summit Science Symposium"
   signature-image: "images/signature.png"
   signature-image-width: "5cm"
 exports:

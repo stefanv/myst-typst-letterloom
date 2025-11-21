@@ -38,15 +38,15 @@
   signatures: (
 
    (
-     [# if options.signature-name #]
+     [# if options['signature-name'] #]
      name: "[-options['signature-name']-]",
      [# else #]
      name: "[-options['from-name']-]",
      [# endif #]
-     [# if options.signature-title #]
+     [# if options['signature-title'] #]
      title: "[-options['signature-title']-]",
      [# endif #]
-     [# if options.signature-affiliation #]
+     [# if options['signature-affiliation'] #]
      affiliation: "[-options['signature-affiliation']-]",
      [# endif #]
      [# if options['signature-image'] #]
