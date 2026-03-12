@@ -18,7 +18,7 @@ version: 0.0.1
 license: MIT-0
 tags:
   - letter
-# thumbnail:
+thumbnail: https://raw.githubusercontent.com/stefanv/myst-typst-letterloom/refs/heads/example/thumbnail.png
 github: https://github.com/myst-templates/typst-letterbloom
 doc:
   - id: title
