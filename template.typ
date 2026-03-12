@@ -14,6 +14,13 @@
   // attn-address: "Attn:",
   // attn-position: "above",
 
+  [# if options['banner-image'] #]
+  banner: image(
+    "[-options['banner-image']-]",
+    width: 100%
+  ),
+  [# endif -#]
+
   // Letter date (automatically set to today's date)
   [# if doc.date #]
   date: datetime(

@@ -6,6 +6,7 @@ options:
   from-address: "115 Somewhere Rd\nSummit, CA 92345"
   to-name: "Dr. Alice Academic"
   to-address: "1000 Grizzly Peak Rd\nBerkeley, CA 94704"
+  banner-image: "images/banner.svg"
   salutation: "Dear Dr. Smith,"
   closing: "Best regards,"
 #  signature-name: Johnny

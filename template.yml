@@ -40,6 +40,9 @@ options:
 - id: to-address
   type: string
   description: Recipient's address
+- id: banner-image
+  type: file
+  description: Path to an image file to be used as letter banner
 - id: salutation
   type: string
   description: Opening greeting

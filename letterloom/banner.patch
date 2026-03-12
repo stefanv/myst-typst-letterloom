@@ -1,0 +1,21 @@
+diff --git a/letterloom/lib.typ b/letterloom/lib.typ
+index d9e6f2d..e40fdae 100644
+--- a/letterloom/lib.typ
++++ b/letterloom/lib.typ
+@@ -13,6 +13,7 @@
+   from-address: none,
+   to-name: none,
+   to-address: none,
++  banner: none,
+   date: none,
+   salutation: none,
+   subject: none,
+@@ -118,6 +119,8 @@
+     it
+   }
+ 
++  banner;
++
+   // Sender's name, address, and date block
+   align(from-alignment, block[
+     #set align(left)
