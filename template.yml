@@ -14,7 +14,7 @@ authors:
     affiliations:
       - Scientific Python
       - BIDS, UC Berkeley
-version: 0.0.1
+version: 0.1.0
 license: MIT-0
 tags:
   - letter
@@ -40,9 +40,40 @@ options:
 - id: to-address
   type: string
   description: Recipient's address
+- id: paper-size
+  type: string
+  default: us-letter
+  description: 'Typst paper size (e.g., "us-letter" or "a4")'
+- id: letterhead-image
+  type: file
+  description: Path to an image file placed at the top of the first page, flush with the page edges
+- id: letterhead-width
+  type: string
+  description: 'Width of the letterhead image, as a Typst length or percentage (e.g., "60%" or "12cm"); default fills the page width'
+- id: letterhead-height
+  type: string
+  description: 'Height of the letterhead image, as a Typst length (e.g., "3cm"); default scales with the width'
+- id: letterhead-inset
+  type: string
+  description: 'Space between the letterhead image and the page edges, as a Typst length or dictionary (e.g., "10mm" or "(x: 20mm, top: 10mm)")'
+- id: letterhead-alignment
+  type: choice
+  choices: [left, center, right]
+  description: Horizontal alignment of the letterhead image; ignored when letterhead-sender-position is set
+- id: letterhead-sender-position
+  type: choice
+  choices: [left, center, right]
+  description: Put the sender's address in the letterhead, left of, below, or right of the image
+- id: letterhead-sender-valign
+  type: choice
+  choices: [top, horizon, bottom]
+  description: Vertical alignment of the sender's address next to the letterhead image (sender position left or right)
+- id: letterhead-bottom-gap
+  type: string
+  description: 'Space below the letterhead, as a Typst length (e.g., "1em"); used when the sender position is center'
 - id: banner-image
   type: file
-  description: Path to an image file to be used as letter banner
+  description: "Deprecated: use letterhead-image. Path to an image file placed inside the top page margin"
 - id: salutation
   type: string
   description: Opening greeting

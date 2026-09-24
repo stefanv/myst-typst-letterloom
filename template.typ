@@ -1,23 +1,75 @@
 #import "letterloom/lib.typ": *
 
-#show: letterloom.with(
+#set page(paper: "[-options['paper-size']-]")
+
+// Context gives access to the page size, which the banner-image alias needs
+#show: body => context {
+// Typst's `margin: auto` is 2.5/21 of the shorter page side (25mm on A4)
+let auto-margin = calc.min(page.width, page.height) * 2.5 / 21
+
+letterloom.with(
+  paper-size: "[-options['paper-size']-]",
+
+  // letterloom requires every listed field; list only the fields that are set
+  required-fields: (
+    "from-name", "date", "subject", "signatures",
+    [# for f in ['from-address', 'to-name', 'to-address', 'salutation', 'closing'] #]
+    [# if options[f] #]"[-f-]",[# endif #]
+    [# endfor #]
+  ),
+
   // Sender's contact information (name and address)
   from-name: "[-options['from-name']-]",
+  [# if options['from-address'] #]
   from-address: "[-options['from-address']-]",
+  [# endif #]
   // from-alignment: right,
 
   // Recipient's contact information (name and address)
+  [# if options['to-name'] #]
   to-name: "[-options['to-name']-]",
+  [# endif #]
+  [# if options['to-address'] #]
   to-address: "[-options['to-address']-]",
+  [# endif #]
 
   // attn-name: "Attn: Receiver's Name",
   // attn-address: "Attn:",
   // attn-position: "above",
 
-  [# if options['banner-image'] #]
-  banner: image(
-    "[-options['banner-image']-]",
-    width: 100%
+  // Letterhead image on page 1; `banner-image` is a deprecated alias
+  [# set lh = options['letterhead-image'] or options['banner-image'] #]
+  [# if lh #]
+  letterhead: (
+    file: read("[-lh-]", encoding: none),
+    [# if options['letterhead-width'] #]
+    width: [-options['letterhead-width']-],
+    [# endif #]
+    [# if options['letterhead-height'] #]
+    height: [-options['letterhead-height']-],
+    [# endif #]
+    [# if options['letterhead-inset'] #]
+    image-inset: [-options['letterhead-inset']-],
+    [# elif not options['letterhead-image'] #]
+    // Keep `banner-image` inside the auto page margins, one par-spacing (1.8em at 11pt) above the text
+    image-inset: (
+      x: auto-margin,
+      top: auto-margin,
+      bottom: 19.8pt,
+    ),
+    [# endif #]
+    [# if options['letterhead-alignment'] #]
+    image-alignment: [-options['letterhead-alignment']-],
+    [# endif #]
+    [# if options['letterhead-sender-position'] #]
+    sender-position: [-options['letterhead-sender-position']-],
+    [# endif #]
+    [# if options['letterhead-sender-valign'] #]
+    sender-valign: [-options['letterhead-sender-valign']-],
+    [# endif #]
+    [# if options['letterhead-bottom-gap'] #]
+    bottom-gap: [-options['letterhead-bottom-gap']-],
+    [# endif #]
   ),
   [# endif -#]
 
@@ -33,13 +85,17 @@
   [# endif #]
 
   // Opening greeting
+  [# if options['salutation'] #]
   salutation: "[-options.salutation-]",
+  [# endif #]
 
   // Letter subject line
   subject: smallcaps(text(weight: "bold")[[-doc.title-]]),
 
   // Closing phrase
+  [# if options['closing'] #]
   closing: "[-options.closing-]",
+  [# endif #]
 
   // List of signatures with their name, optional signature image, title and affiliation
   signatures: (
@@ -50,11 +106,11 @@
      [# else #]
      name: "[-options['from-name']-]",
      [# endif #]
-     [# if options['signature-title'] #]
-     title: "[-options['signature-title']-]",
-     [# endif #]
-     [# if options['signature-affiliation'] #]
-     affiliation: "[-options['signature-affiliation']-]",
+     // letterloom has no title field; show the title above the affiliation
+     [# if options['signature-title'] and options['signature-affiliation'] #]
+     affiliation: "[-options['signature-title']-]\n[-options['signature-affiliation']-]",
+     [# elif options['signature-title'] or options['signature-affiliation'] #]
+     affiliation: "[-options['signature-title'] or options['signature-affiliation']-]",
      [# endif #]
      [# if options['signature-image'] #]
      signature: image(
@@ -79,6 +135,7 @@
   ),
 
   // signature-alignment: left,
+  // date-alignment: right,
 
   // cc: none,
   // cc-label: "cc:",
@@ -86,7 +143,6 @@
   // enclosures-label: "encl:",
   // footer: none,
 
-  // paper-size: "a4",
   // margins: auto,
   // par-leading: 0.8em,
   // par-spacing: 1.8em,
@@ -101,7 +157,8 @@
 
   // footnote-alignment: left,
   // link-color: blue,
-)
+)(body)
+}
 
 [-IMPORTS-]
 

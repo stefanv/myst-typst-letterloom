@@ -17,4 +17,4 @@ them.
 
 ## For theme developers
 
-The `letterloom` directory was populated from https://github.com/nandac/letterloom/tree/main/src
+The `letterloom` directory was populated from https://github.com/nandac/letterloom/tree/v3.0.2/src
