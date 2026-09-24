@@ -6,14 +6,28 @@
 #show: body => context letterloom.with(
   paper-size: "[-options['paper-size']-]",
 
+  // letterloom requires every listed field; list only the fields that are set
+  required-fields: (
+    "from-name", "date", "subject", "signatures",
+    [# for f in ['from-address', 'to-name', 'to-address', 'salutation', 'closing'] #]
+    [# if options[f] #]"[-f-]",[# endif #]
+    [# endfor #]
+  ),
+
   // Sender's contact information (name and address)
   from-name: "[-options['from-name']-]",
+  [# if options['from-address'] #]
   from-address: "[-options['from-address']-]",
+  [# endif #]
   // from-alignment: right,
 
   // Recipient's contact information (name and address)
+  [# if options['to-name'] #]
   to-name: "[-options['to-name']-]",
+  [# endif #]
+  [# if options['to-address'] #]
   to-address: "[-options['to-address']-]",
+  [# endif #]
 
   // attn-name: "Attn: Receiver's Name",
   // attn-address: "Attn:",
@@ -67,13 +81,17 @@
   [# endif #]
 
   // Opening greeting
+  [# if options['salutation'] #]
   salutation: "[-options.salutation-]",
+  [# endif #]
 
   // Letter subject line
   subject: smallcaps(text(weight: "bold")[[-doc.title-]]),
 
   // Closing phrase
+  [# if options['closing'] #]
   closing: "[-options.closing-]",
+  [# endif #]
 
   // List of signatures with their name, optional signature image, title and affiliation
   signatures: (
