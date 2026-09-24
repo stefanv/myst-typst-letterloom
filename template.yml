@@ -40,6 +40,10 @@ options:
 - id: to-address
   type: string
   description: Recipient's address
+- id: paper-size
+  type: string
+  default: us-letter
+  description: 'Typst paper size (e.g., "us-letter" or "a4")'
 - id: letterhead-image
   type: file
   description: Path to an image file placed at the top of the first page, flush with the page edges

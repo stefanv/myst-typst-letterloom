@@ -15,6 +15,8 @@ Browse [./template.yml](./template.yml) for a list of template
 options, and see [./example/letter.md](./example/letter.md) how to use
 them.
 
+The default paper size is US letter. Set `paper-size: a4` for A4.
+
 `letterhead-image` places an image at the top of the first page, flush
 with the page edges. Use `letterhead-inset` to move it away from the
 edges, and `letterhead-sender-position` to put the sender's address

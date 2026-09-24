@@ -1,6 +1,11 @@
 #import "letterloom/lib.typ": *
 
-#show: letterloom.with(
+#set page(paper: "[-options['paper-size']-]")
+
+// Context gives access to the page size, which the banner-image alias needs
+#show: body => context letterloom.with(
+  paper-size: "[-options['paper-size']-]",
+
   // Sender's contact information (name and address)
   from-name: "[-options['from-name']-]",
   from-address: "[-options['from-address']-]",
@@ -28,8 +33,12 @@
     [# if options['letterhead-inset'] #]
     image-inset: [-options['letterhead-inset']-],
     [# elif not options['letterhead-image'] #]
-    // Keep `banner-image` inside the auto page margins (25mm on A4), one par-spacing (1.8em at 11pt) above the text
-    image-inset: (x: 25mm, top: 25mm, bottom: 19.8pt),
+    // Keep `banner-image` inside the auto page margins, one par-spacing (1.8em at 11pt) above the text
+    image-inset: (
+      x: calc.min(page.width, page.height) * 2.5 / 21,
+      top: calc.min(page.width, page.height) * 2.5 / 21,
+      bottom: 19.8pt,
+    ),
     [# endif #]
     [# if options['letterhead-alignment'] #]
     image-alignment: [-options['letterhead-alignment']-],
@@ -112,7 +121,6 @@
   // enclosures-label: "encl:",
   // footer: none,
 
-  // paper-size: "a4",
   // margins: auto,
   // par-leading: 0.8em,
   // par-spacing: 1.8em,
@@ -127,7 +135,7 @@
 
   // footnote-alignment: left,
   // link-color: blue,
-)
+)(body)
 
 [-IMPORTS-]
 
