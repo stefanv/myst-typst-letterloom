@@ -3,7 +3,11 @@
 #set page(paper: "[-options['paper-size']-]")
 
 // Context gives access to the page size, which the banner-image alias needs
-#show: body => context letterloom.with(
+#show: body => context {
+// Typst's `margin: auto` is 2.5/21 of the shorter page side (25mm on A4)
+let auto-margin = calc.min(page.width, page.height) * 2.5 / 21
+
+letterloom.with(
   paper-size: "[-options['paper-size']-]",
 
   // letterloom requires every listed field; list only the fields that are set
@@ -49,8 +53,8 @@
     [# elif not options['letterhead-image'] #]
     // Keep `banner-image` inside the auto page margins, one par-spacing (1.8em at 11pt) above the text
     image-inset: (
-      x: calc.min(page.width, page.height) * 2.5 / 21,
-      top: calc.min(page.width, page.height) * 2.5 / 21,
+      x: auto-margin,
+      top: auto-margin,
       bottom: 19.8pt,
     ),
     [# endif #]
@@ -154,6 +158,7 @@
   // footnote-alignment: left,
   // link-color: blue,
 )(body)
+}
 
 [-IMPORTS-]
 
