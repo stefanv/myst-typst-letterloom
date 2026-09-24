@@ -16,7 +16,7 @@ options:
   signature-image-width: "5cm"
 exports:
   - format: typst
-    template: ..
+    template: stefanv/letterloom-typst
     output: exports/letter.pdf
 ---
 
