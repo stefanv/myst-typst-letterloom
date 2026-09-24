@@ -14,10 +14,35 @@
   // attn-address: "Attn:",
   // attn-position: "above",
 
-  [# if options['banner-image'] #]
-  banner: image(
-    "[-options['banner-image']-]",
-    width: 100%
+  // Letterhead image on page 1; `banner-image` is a deprecated alias
+  [# set lh = options['letterhead-image'] or options['banner-image'] #]
+  [# if lh #]
+  letterhead: (
+    file: read("[-lh-]", encoding: none),
+    [# if options['letterhead-width'] #]
+    width: [-options['letterhead-width']-],
+    [# endif #]
+    [# if options['letterhead-height'] #]
+    height: [-options['letterhead-height']-],
+    [# endif #]
+    [# if options['letterhead-inset'] #]
+    image-inset: [-options['letterhead-inset']-],
+    [# elif not options['letterhead-image'] #]
+    // Keep `banner-image` inside the auto page margins (25mm on A4), one par-spacing (1.8em at 11pt) above the text
+    image-inset: (x: 25mm, top: 25mm, bottom: 19.8pt),
+    [# endif #]
+    [# if options['letterhead-alignment'] #]
+    image-alignment: [-options['letterhead-alignment']-],
+    [# endif #]
+    [# if options['letterhead-sender-position'] #]
+    sender-position: [-options['letterhead-sender-position']-],
+    [# endif #]
+    [# if options['letterhead-sender-valign'] #]
+    sender-valign: [-options['letterhead-sender-valign']-],
+    [# endif #]
+    [# if options['letterhead-bottom-gap'] #]
+    bottom-gap: [-options['letterhead-bottom-gap']-],
+    [# endif #]
   ),
   [# endif -#]
 
@@ -50,11 +75,11 @@
      [# else #]
      name: "[-options['from-name']-]",
      [# endif #]
-     [# if options['signature-title'] #]
-     title: "[-options['signature-title']-]",
-     [# endif #]
-     [# if options['signature-affiliation'] #]
-     affiliation: "[-options['signature-affiliation']-]",
+     // letterloom has no title field; show the title above the affiliation
+     [# if options['signature-title'] and options['signature-affiliation'] #]
+     affiliation: "[-options['signature-title']-]\n[-options['signature-affiliation']-]",
+     [# elif options['signature-title'] or options['signature-affiliation'] #]
+     affiliation: "[-options['signature-title'] or options['signature-affiliation']-]",
      [# endif #]
      [# if options['signature-image'] #]
      signature: image(
@@ -79,6 +104,7 @@
   ),
 
   // signature-alignment: left,
+  // date-alignment: right,
 
   // cc: none,
   // cc-label: "cc:",
