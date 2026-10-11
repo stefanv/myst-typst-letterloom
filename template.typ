@@ -13,15 +13,20 @@ letterloom.with(
   // letterloom requires every listed field; list only the fields that are set
   required-fields: (
     "from-name", "date", "subject", "signatures",
-    [# for f in ['from-address', 'to-name', 'to-address', 'salutation', 'closing'] #]
+    [# if options['from-address'] or options['from-email'] or options['from-phone'] #]"from-address",[# endif #]
+    [# for f in ['to-name', 'to-address', 'salutation', 'closing'] #]
     [# if options[f] #]"[-f-]",[# endif #]
     [# endfor #]
   ),
 
-  // Sender's contact information (name and address)
+  // Sender's contact information (name, address, email and phone)
   from-name: "[-options['from-name']-]",
-  [# if options['from-address'] #]
-  from-address: "[-options['from-address']-]",
+  [# if options['from-address'] or options['from-email'] or options['from-phone'] #]
+  from-address: (
+    [# if options['from-address'] #]"[-options['from-address']-]",[# endif #]
+    [# if options['from-email'] #]link("mailto:[-options['from-email']-]", raw("[-options['from-email']-]")),[# endif #]
+    [# if options['from-phone'] #]"[-options['from-phone']-]",[# endif #]
+  ).join(linebreak()),
   [# endif #]
   // from-alignment: right,
 

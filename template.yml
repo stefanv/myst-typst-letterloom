@@ -34,6 +34,12 @@ options:
 - id: from-address
   type: string
   description: Sender's address
+- id: from-email
+  type: string
+  description: Sender's email address, shown in monospace below the address
+- id: from-phone
+  type: string
+  description: Sender's phone number, shown below the email address
 - id: to-name
   type: string
   description: Recipient's name
