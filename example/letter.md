@@ -4,6 +4,8 @@ date: 2025-11-20
 options:
   from-name: "John Organizer"
   from-address: "115 Somewhere Rd\nSummit, CA 92345"
+  from-email: "john@example.org"
+  from-phone: "+1 555-010-0123"
   to-name: "Dr. Alice Academic"
   to-address: "1000 Grizzly Peak Rd\nBerkeley, CA 94704"
   letterhead-image: "images/banner.svg"
